@@ -1,21 +1,20 @@
-﻿/// <reference path="../../../../node_modules/@types/jasmine/index.d.ts" />
 import { TestBed, async, ComponentFixture, ComponentFixtureAutoDetect } from '@angular/core/testing';
 import { BrowserModule, By } from "@angular/platform-browser";
-import { ValueComponent } from './value.component';
+import { AuthService } from './auth.service';
 
-let component: ValueComponent;
-let fixture: ComponentFixture<ValueComponent>;
+let component: AuthService;
+let fixture: ComponentFixture<AuthService>;
 
-describe('value component', () => {
+describe('auth.service component', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [ ValueComponent ],
+          declarations: [AuthService ],
             imports: [ BrowserModule ],
             providers: [
                 { provide: ComponentFixtureAutoDetect, useValue: true }
             ]
         });
-        fixture = TestBed.createComponent(ValueComponent);
+      fixture = TestBed.createComponent(AuthService);
         component = fixture.componentInstance;
     }));
 
