@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 
 @Component({
@@ -8,6 +8,7 @@ import { AuthService } from '../_services/auth.service';
 })
 export class NavMenuComponent implements OnInit {
   isExpanded = false;
+  @Output() loggedOut = new EventEmitter();
 
   collapse() {
     this.isExpanded = false;
@@ -39,6 +40,7 @@ export class NavMenuComponent implements OnInit {
 
   logout() {
     localStorage.removeItem('token');
+    this.loggedOut.emit(false);
     console.log('logged out');
   }
 
