@@ -33,6 +33,7 @@
     "kind-of": "^6.0.3",
     "minimist": "^1.2.3",
     "ngx-bootstrap": "^5.6.1",
+    "ngx-gallery": "^5.10.0",
     "oidc-client": "^1.9.1",
     "rxjs": "^6.5.3",
     "serialize-javascript": "^2.1.1",
