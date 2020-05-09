@@ -45,7 +45,7 @@ export class NavMenuComponent implements OnInit {
     localStorage.removeItem('token');
     this.loggedOut.emit(false);
     this.alertify.message('logged out');
-    this.router.navigate(['/home']);
+    this.router.navigate(['/']);
   }
 
 }
