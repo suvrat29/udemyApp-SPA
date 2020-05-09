@@ -21,6 +21,9 @@ import { AuthGuard } from './_guards/auth.guard';
 import { UserService } from './_services/user.service';
 import { MemberCardComponent } from './members/member-card/member-card.component';
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
+import { AlertifyService } from './_services/alertify.service';
+import { MemberDetailResolver } from './_resolver/member-detail.resolver';
+import { MemberListResolver } from './_resolver/member-list.resolver';
 
 
 export function tokenGetter() {
@@ -45,6 +48,7 @@ export function tokenGetter() {
     FormsModule,
     BrowserAnimationsModule,
     BsDropdownModule.forRoot(),
+    TabsModule.forRoot(),
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
       {
@@ -52,8 +56,9 @@ export function tokenGetter() {
         runGuardsAndResolvers: 'always',
         canActivate: [AuthGuard],
         children: [
-          { path: 'members', component: MemberListComponent },
-          { path: 'members/:id', component: MemberDetailComponent },
+          { path: 'members', component: MemberListComponent, resolve:
+           { users: MemberListResolver} },
+          { path: 'members/:id', component: MemberDetailComponent, resolve: { user:  MemberDetailResolver} },
           { path: 'messages', component: MessagesComponent },
           { path: 'lists', component: ListsComponent },
         ]
@@ -67,12 +72,15 @@ export function tokenGetter() {
         blacklistedRoutes: ['localhost:5000/api/auth']
       }
     }),
-    TabsModule.forRoot()
   ],
   providers: [
     AuthService,
-    UserService,
     ErrorInterceptorProvider,
+    AlertifyService,
+    AuthGuard,
+    UserService,
+    MemberDetailResolver,
+    MemberListResolver
   ],
   bootstrap: [AppComponent]
 })
