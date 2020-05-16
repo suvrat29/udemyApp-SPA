@@ -43,6 +43,9 @@ export class NavMenuComponent implements OnInit {
 
     logout() {
         localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        this.authService.decodedToken = null;
+        this.authService.currentUser = null;
         this.loggedOut.emit(false);
         this.alertify.message('logged out');
         this.router.navigate(['/']);

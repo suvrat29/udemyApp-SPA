@@ -32,6 +32,7 @@
         "font-awesome": "^4.7.0",
         "kind-of": "^6.0.3",
         "minimist": "^1.2.3",
+        "ng2-file-upload": "^1.4.0",
         "ngx-bootstrap": "^5.6.1",
         "ngx-gallery": "^5.10.0",
         "oidc-client": "^1.9.1",
