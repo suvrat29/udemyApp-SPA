@@ -8,6 +8,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
 import { NgxGalleryModule } from 'ngx-gallery';
+import { FileUploadModule } from 'ng2-file-upload';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -25,73 +26,84 @@ import { MemberDetailComponent } from './members/member-detail/member-detail.com
 import { AlertifyService } from './_services/alertify.service';
 import { MemberDetailResolver } from './_resolver/member-detail.resolver';
 import { MemberListResolver } from './_resolver/member-list.resolver';
-
+import { MemberEditComponent } from './members/member-edit/member-edit.component';
+import { MemberEditResolver } from './_resolver/member-edit.resolver';
+import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
+import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 
 export function tokenGetter() {
-  return localStorage.getItem('token');
+    return localStorage.getItem('token');
 }
 
 export class CustomHammerConfig extends HammerGestureConfig {
-  overrides = {
-    pinch: { enable: false },
-    rotate: { enable: false }
-  };
+    overrides = {
+        pinch: { enable: false },
+        rotate: { enable: false }
+    };
 }
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavMenuComponent,
-    HomeComponent,
-    RegisterComponent,
-    MemberListComponent,
-    ListsComponent,
-    MessagesComponent,
-    MemberCardComponent,
-    MemberDetailComponent
-  ],
-  imports: [
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
-    HttpClientModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    BsDropdownModule.forRoot(),
-    TabsModule.forRoot(),
-    RouterModule.forRoot([
-      { path: '', component: HomeComponent },
-      {
-        path: '',
-        runGuardsAndResolvers: 'always',
-        canActivate: [AuthGuard],
-        children: [
-          { path: 'members', component: MemberListComponent, resolve:
-           { users: MemberListResolver} },
-          { path: 'members/:id', component: MemberDetailComponent, resolve: { user:  MemberDetailResolver} },
-          { path: 'messages', component: MessagesComponent },
-          { path: 'lists', component: ListsComponent },
-        ]
-      },
-      { path: '**', redirectTo: '', pathMatch: 'full'},
-    ]),
-    NgxGalleryModule,
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: tokenGetter,
-        whitelistedDomains: ['localhost:5000'],
-        blacklistedRoutes: ['localhost:5000/api/auth']
-      }
-    }),
-  ],
-  providers: [
-    AuthService,
-    ErrorInterceptorProvider,
-    AlertifyService,
-    AuthGuard,
-    UserService,
-    MemberDetailResolver,
-    MemberListResolver,
-    { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig }
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        NavMenuComponent,
+        HomeComponent,
+        RegisterComponent,
+        MemberListComponent,
+        ListsComponent,
+        MessagesComponent,
+        MemberCardComponent,
+        MemberDetailComponent,
+        MemberEditComponent,
+        PhotoEditorComponent
+    ],
+    imports: [
+        BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+        HttpClientModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        BsDropdownModule.forRoot(),
+        TabsModule.forRoot(),
+        RouterModule.forRoot([
+            { path: '', component: HomeComponent },
+            {
+                path: '',
+                runGuardsAndResolvers: 'always',
+                canActivate: [AuthGuard],
+                children: [
+                    {
+                        path: 'members', component: MemberListComponent, resolve:
+                            { users: MemberListResolver }
+                    },
+                    { path: 'members/:id', component: MemberDetailComponent, resolve: { user: MemberDetailResolver } },
+                    { path: 'member/edit', component: MemberEditComponent, resolve: { user: MemberEditResolver }, canDeactivate: [PreventUnsavedChanges] },
+                    { path: 'messages', component: MessagesComponent },
+                    { path: 'lists', component: ListsComponent },
+                ]
+            },
+            { path: '**', redirectTo: '', pathMatch: 'full' },
+        ]),
+        NgxGalleryModule,
+        FileUploadModule,
+        JwtModule.forRoot({
+            config: {
+                tokenGetter: tokenGetter,
+                whitelistedDomains: ['localhost:5000'],
+                blacklistedRoutes: ['localhost:5000/api/auth']
+            }
+        }),
+    ],
+    providers: [
+        AuthService,
+        ErrorInterceptorProvider,
+        AlertifyService,
+        AuthGuard,
+        UserService,
+        MemberDetailResolver,
+        MemberListResolver,
+        MemberEditResolver,
+        PreventUnsavedChanges,
+        { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig }
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

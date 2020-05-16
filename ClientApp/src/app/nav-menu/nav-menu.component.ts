@@ -4,48 +4,52 @@ import { AlertifyService } from '../_services/alertify.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-nav-menu',
-  templateUrl: './nav-menu.component.html',
-  styleUrls: ['./nav-menu.component.css']
+    selector: 'app-nav-menu',
+    templateUrl: './nav-menu.component.html',
+    styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent implements OnInit {
-  isExpanded = false;
-  @Output() loggedOut = new EventEmitter();
+    isExpanded = false;
+    @Output() loggedOut = new EventEmitter();
 
-  collapse() {
-    this.isExpanded = false;
-  }
+    collapse() {
+        this.isExpanded = false;
+    }
 
-  toggle() {
-    this.isExpanded = !this.isExpanded;
-  }
+    toggle() {
+        this.isExpanded = !this.isExpanded;
+    }
 
-  model: any = {};
+    model: any = {};
+    photoUrl: string;
 
-  constructor(public authService: AuthService, private alertify: AlertifyService, private router: Router) { }
+    constructor(public authService: AuthService, private alertify: AlertifyService, private router: Router) { }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+        this.authService.currentPhotoUrl.subscribe(photoUrl => this.photoUrl = photoUrl);
+    }
 
-  login() {
-    this.authService.login(this.model).subscribe(next => {
-      this.alertify.success('Logged in successfully');
-    }, error => {
-      this.alertify.error(error);
-    }, () => {
-        this.router.navigate(['/members']);
-    });
-  }
+    login() {
+        this.authService.login(this.model).subscribe(next => {
+            this.alertify.success('Logged in successfully');
+        }, error => {
+            this.alertify.error(error);
+        }, () => {
+            this.router.navigate(['/members']);
+        });
+    }
 
-  loggedIn() {
-    return this.authService.loggedIn();
-  }
+    loggedIn() {
+        return this.authService.loggedIn();
+    }
 
-  logout() {
-    localStorage.removeItem('token');
-    this.loggedOut.emit(false);
-    this.alertify.message('logged out');
-    this.router.navigate(['/']);
-  }
-
+    logout() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        this.authService.decodedToken = null;
+        this.authService.currentUser = null;
+        this.loggedOut.emit(false);
+        this.alertify.message('logged out');
+        this.router.navigate(['/']);
+    }
 }

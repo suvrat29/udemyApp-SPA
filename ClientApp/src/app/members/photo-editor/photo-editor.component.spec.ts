@@ -1,20 +1,21 @@
+﻿/// <reference path="../../../../../node_modules/@types/jasmine/index.d.ts" />
 import { TestBed, async, ComponentFixture, ComponentFixtureAutoDetect } from '@angular/core/testing';
 import { BrowserModule, By } from "@angular/platform-browser";
-import { AuthService } from './auth.service';
+import { PhotoEditorComponent } from './photo-editor.component';
 
-let component: AuthService;
-let fixture: ComponentFixture<AuthService>;
+let component: PhotoEditorComponent;
+let fixture: ComponentFixture<PhotoEditorComponent>;
 
-describe('auth.service component', () => {
+describe('photo-editor component', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [AuthService],
-            imports: [BrowserModule],
+            declarations: [ PhotoEditorComponent ],
+            imports: [ BrowserModule ],
             providers: [
                 { provide: ComponentFixtureAutoDetect, useValue: true }
             ]
         });
-        fixture = TestBed.createComponent(AuthService);
+        fixture = TestBed.createComponent(PhotoEditorComponent);
         component = fixture.componentInstance;
     }));
 

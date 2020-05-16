@@ -1,4 +1,4 @@
-﻿/// <reference path="../../../../../node_modules/@types/jasmine/index.d.ts" />
+/// <reference path="../../../../../node_modules/@types/jasmine/index.d.ts" />
 import { TestBed, async, ComponentFixture, ComponentFixtureAutoDetect } from '@angular/core/testing';
 import { BrowserModule, By } from "@angular/platform-browser";
 import { MemberCardComponent } from './member-card.component';
@@ -9,8 +9,8 @@ let fixture: ComponentFixture<MemberCardComponent>;
 describe('member-card component', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [ MemberCardComponent ],
-            imports: [ BrowserModule ],
+            declarations: [MemberCardComponent],
+            imports: [BrowserModule],
             providers: [
                 { provide: ComponentFixtureAutoDetect, useValue: true }
             ]

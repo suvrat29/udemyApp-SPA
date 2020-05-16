@@ -8,8 +8,8 @@ let fixture: ComponentFixture<UserService>;
 describe('user.service component', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [ UserService ],
-            imports: [ BrowserModule ],
+            declarations: [UserService],
+            imports: [BrowserModule],
             providers: [
                 { provide: ComponentFixtureAutoDetect, useValue: true }
             ]

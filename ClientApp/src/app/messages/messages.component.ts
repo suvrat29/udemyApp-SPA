@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
     selector: 'app-messages',
@@ -9,6 +9,5 @@
 export class MessagesComponent {
     /** messages ctor */
     constructor() {
-
     }
 }
